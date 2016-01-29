@@ -25,6 +25,10 @@
     position: absolute;
     font-size: 26pt;
     right: 10px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 button {
