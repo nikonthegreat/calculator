@@ -153,6 +153,9 @@ class Calculator {
     }
 
     _pressOperation( operation ) {
+        if( this._operation && this._memory2 )
+            this._evaluateResult();
+
         this._operation = operation;
         this._printHistory();
         this._memory2 = '';
