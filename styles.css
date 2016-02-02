@@ -1,28 +1,43 @@
 .calculator {
     position: fixed;
-    background: #CCCCCC;
-    height: 250px;
+    background: linear-gradient(to top, #d5e0ee, #f0f6fb);
+    height: 260px;
     width: 240px;
-    border: 2px #AAAAAA solid;
-}
-
-.result-field {
-    position: relative;
-    background: #EEEEEE;
-    top:10px;
-    left:10px;
-    height: 40px;
-    width: 220px;
-    border: 1px solid;
+    border: 2px #8E9CAD solid;
     -webkit-border-radius:5px;
     -moz-border-radius:5x;
     border-radius:5px;
 }
 
+.result-field {
+    position: relative;
+    background: linear-gradient(to top, #fafbfd, #f0f6fb);
+    top:10px;
+    left:10px;
+    height: 50px;
+    width: 220px;
+    border: 1px #8E9CAD solid;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5x;
+    border-radius:5px;
+}
+
+.history-text {
+    position: absolute;
+    font-size: 10pt;
+    right: 12px;
+    top: 2px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 .result-text {
     position: absolute;
-    font-size: 26pt;
+    font-size: 24pt;
     right: 10px;
+    top:12px;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -31,12 +46,13 @@
 
 button {
     position: absolute;
-    background: #BBBBBB;
+    background: linear-gradient(to top, #bbd1ec, #f0f6fb);
     width: 40px;
     height: 40px;
     -webkit-border-radius:5px;
     -moz-border-radius:5x;
     border-radius:5px;
+    font-color: #1e395b;
 
     -webkit-user-select: none;
     -moz-user-select: none;
