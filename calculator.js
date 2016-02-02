@@ -3,38 +3,60 @@
 class Calculator {
     constructor(options) {
         this._element = options.element;
+
         this._clearAll();
         this._element.addEventListener('click', this._onCalculatorClicked.bind(this));
+
+        this._actions = {
+            divide: this._pressOperation.bind(this, '/'),
+            multiply: this._pressOperation.bind(this, '*'),
+            sub: this._pressOperation.bind(this, '-'),
+            sum: this._pressOperation.bind(this, '+')
+        }
     }
 
     _onCalculatorClicked(event) {
-        var pressedButton = event.target.dataset['button'];
-        if( pressedButton >= 0 && pressedButton < 10 ) {
-            this._pressNumButton(pressedButton);
-        }
-        else if ( pressedButton === 'button-divide' ) {
-            this._pressOperation('/');
-        }
-        else if ( pressedButton === 'button-multiply' ) {
-            this._pressOperation('*');
-        }
-        else if ( pressedButton === 'button-sub' ) {
-            this._pressOperation('-');
-        }
-        else if ( pressedButton === 'button-sum' ) {
-            this._pressOperation('+');
-        }
-        else if ( pressedButton === 'button-comma' ) {
+        console.log('123');
 
-        }
-        else if ( pressedButton === 'button-erase' ) {
-            this._eraseLast();
-        }
-        else if ( pressedButton === 'button-clear' ) {
-            this._clearAll();
-        }
-        else if ( pressedButton === 'button-result' ) {
-            this._evaluateResult();
+        var pressedButton = event.target.dataset['button'];
+
+        switch( pressedButton  ) {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                this._pressNumButton(pressedButton);
+                break;
+            case 'button-divide':
+                this._actions.divide();
+                break;
+            case 'button-multiply':
+                this._actions.multiply();
+                break;
+            case 'button-sub':
+                this._actions.sub();
+                break;
+            case 'button-sum':
+                this._actions.sum();
+                break;
+            case 'button-comma':
+                // TODO comma
+                break;
+            case 'button-erase':
+                this._eraseLast();
+                break;
+            case 'button-clear':
+                this._clearAll();
+                break;
+            case 'button-result':
+                this._evaluateResult();
+                break;
         }
     }
 
@@ -42,12 +64,18 @@ class Calculator {
         this._memory1 = "";
         this._memory2 = "";
         this._operation = "";
+        this._clearHistory();
         this._printResult("0");
     }
 
     _eraseLast() {
+        if( this._evaluated ) {
+            return;
+        }
+
         if( this._operation ) {
             this._memory2 = this._memory2.slice(0,-1);
+
             if( this._memory2.length > 0 )
                 this._printResult(this._memory2);
             else
@@ -55,7 +83,7 @@ class Calculator {
         }
         else {
             this._memory1 = this._memory1.slice(0,-1);
-            this._printResult(this._memory1);
+
             if( this._memory1.length > 0 )
                 this._printResult(this._memory1);
             else
@@ -76,6 +104,8 @@ class Calculator {
 
     _pressOperation( operation ) {
         this._operation = operation;
+        this._printHistory();
+        this._memory2 = '';
     }
 
     _evaluateResult() {
@@ -99,13 +129,28 @@ class Calculator {
                 break;
         }
 
-        this._clearAll();
         this._memory1 = result;
+        this._clearHistory();
         this._printResult(result);
+        this._evaluated = true;
+    }
+
+    _clearHistory() {
+        this._setHistory('');
+    }
+
+    _printHistory() {
+        this._setHistory( `${this._memory1} ${this._operation}` );
+    }
+
+    _setHistory( historyString ) {
+        var historyField = this._element.querySelector('[data-field=history]');
+        historyField.textContent = historyString;
     }
 
     _printResult( resultString ) {
         var resultField = this._element.querySelector('[data-field=result]');
         resultField.textContent = resultString;
+        this._evaluated = false;
     }
 }
